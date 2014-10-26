@@ -4,15 +4,10 @@
 
 #include <Adafruit_NeoPixel.h>
 
-#define PIN 0
+#define PIN 2
 #define NUM 16
 
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUM, PIN);
-
-uint8_t  mode   = 0, // Current animation effect
-offset = 0; // Position of spinny eyes
-uint32_t color  = 0x0000ff; // Start red
-uint32_t prevTime;
 
 float rcurr;
 float gcurr;
@@ -20,11 +15,8 @@ float bcurr;
 
 void setup() {
   pixels.begin();
-  //  pixels.setBrightness(60); // 1/3 brightness
-  prevTime = millis();
   randomSeed(analogRead(0));
 
-  //  updateAll(0,0,0xff);
   rcurr=0;
   gcurr=0;
   bcurr=255;
@@ -63,27 +55,22 @@ void loop() {
     updateAll(r,g,b);
     for(c = MINBRIGHT; c<= MAXBRIGHT; c++){
       pixels.setBrightness(c);
-//      for(uint8_t l=0; l< NUM; l++){
-//          pixels.setPixelColor(l, r+random(0,10), g+random(0,10), b+random(0,30));
-//      }
+      //      for(uint8_t l=0; l< NUM; l++){
+      //          pixels.setPixelColor(l, r+random(0,10), g+random(0,10), b+random(0,30));
+      //      }
       // Pixel "glitter" effect to make it look more gritty
-      for(uint8_t l=0; l< 3; l++){
-          pixels.setPixelColor(random(0,NUM), r+random(0,5), g+random(0,20), b+random(0,20));
-      }
-
+      pixelFlicker(r,g,b);
       pixels.show();
-//      delay(12);
-      delay(3);
+      //      delay(12);
+      delay(18);
     }
     for(c=MAXBRIGHT; c>= MINBRIGHT; c--){
       pixels.setBrightness(c);
       // Pixel "glitter" effect to make it look more gritty
-      for(uint8_t l=0; l< 3; l++){
-          pixels.setPixelColor(random(0,NUM), r+random(0,5), g+random(0,20), b+random(0,20));
-      }
+      pixelFlicker(r,g,b);
       pixels.show();
-//      delay(10);
-      delay(3);
+      //      delay(10);
+      delay(18);
     }
   }
   rcurr=rnew;
@@ -92,13 +79,35 @@ void loop() {
 
 }
 
+void pixelFlicker(float r, float g, float b){
+
+  if(random(0,200)==5){
+    for(uint8_t l=0; l< 3; l++){
+//     pixels.setPixelColor(random(0,NUM), min(255,r+random(0,2)), min(255,g+random(0,2)), min(255,b+random(0,15)));
+      pixels.setPixelColor(random(0,NUM), r+random(0,2), g+random(0,2), b+random(0,15));
+//      pixels.setPixelColor(random(0,NUM), 255, 255, 255);
+//      pixels.show();
+
+//      pixels.setPixelColor(random(0,NUM), r+random(0,2), g+random(0,2), b+random(0,15));
+    }
+  }
+
+  //  for(uint8_t l=0; l< NUM; l++){
+  ////    pixels.setPixelColor(l, r+random(0,2), g+random(0,2), b+random(0,5));
+  ////    pixels.setPixelColor(l, min(255,r+l*4), min(255,g+l*4), min(255,b+l*4));
+  //    pixels.setPixelColor(l, r, g, b+50);
+  //      pixels.show();
+  //  }
+
+}
+
 
 // Make all the pixels the same color
 void updateAll(float r, float g, float b){
   for(uint8_t l=0; l< NUM; l++){
     pixels.setPixelColor(l, r, g, b);
-    //    pixels.setPixelColor(l, r+random(0,20), g+random(0,20), b+random(0,20));
   }  
+
 }
 
 
@@ -142,6 +151,8 @@ void updateAll(float r, float g, float b){
  * }
  * 
  **/
+
+
 
 
 
