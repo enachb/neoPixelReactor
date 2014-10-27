@@ -81,12 +81,12 @@ void loop() {
 
 void pixelFlicker(float r, float g, float b){
 
-  if(random(0,200)==5){
-    for(uint8_t l=0; l< 3; l++){
+  if(random(0,600)==10){
+    for(uint8_t l=0; l< 8; l++){
 //     pixels.setPixelColor(random(0,NUM), min(255,r+random(0,2)), min(255,g+random(0,2)), min(255,b+random(0,15)));
       pixels.setPixelColor(random(0,NUM), r+random(0,2), g+random(0,2), b+random(0,15));
 //      pixels.setPixelColor(random(0,NUM), 255, 255, 255);
-//      pixels.show();
+      pixels.show();
 
 //      pixels.setPixelColor(random(0,NUM), r+random(0,2), g+random(0,2), b+random(0,15));
     }
