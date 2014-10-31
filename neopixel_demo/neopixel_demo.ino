@@ -5,7 +5,7 @@
 #include <Adafruit_NeoPixel.h>
 
 #define PIN 2
-#define NUM 16
+#define NUM 17
 
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUM, PIN);
 
@@ -35,7 +35,7 @@ void loop() {
   uint8_t  c;
 
   // Pick a new color to fade to
-  float rnew=random(0,180);
+  float rnew=random(0,100);
   float gnew=random(0,255);
   float bnew=random(100,255);
 
@@ -104,10 +104,10 @@ void pixelFlicker(float r, float g, float b){
 
 // Make all the pixels the same color
 void updateAll(float r, float g, float b){
-  for(uint8_t l=0; l< NUM; l++){
+  for(uint8_t l=0; l< NUM-1; l++){
     pixels.setPixelColor(l, r, g, b);
   }  
-
+    pixels.setPixelColor(NUM-1, r + random(0,20) , g + random(0,20) , b + random(0,20));
 }
 
 
